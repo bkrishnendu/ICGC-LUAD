@@ -1,0 +1,22 @@
+getwd()
+library(edgeR)
+Counts<-read.csv("mRNA.csv", header=TRUE, row.names = 1)
+dgList<-DGEList(counts = Counts, genes = row.names(Counts))
+dgList
+dgList$samples
+countsPerMillion<-cpm(dgList)
+summary(countsPerMillion)
+keep<- filterByExpr(countsPerMillion, group = disease_status)
+dgList<-dgList[keep,]
+
+dgList<-calcNormFactors(dgList, method = "TMM")
+head(dgList$genes)
+plotMDS(dgList)
+norm_counts<-cpm(dgList)
+norm_counts
+write.csv(norm_counts, file="norm_counts.csv")
+disease_status<-factor(c("complete","progression","complete","complete","normal","complete","complete","normal","progression","complete","complete","complete","complete","complete","complete","complete","complete","normal","normal","complete","complete","complete","complete","complete","complete","complete","complete","progression","complete","complete","complete","complete","complete","complete","complete","complete","complete","complete","progression","progression","complete","normal","complete","complete","normal","complete","complete","complete","progression","progression","complete","complete","complete","complete","complete","complete","complete","complete","progression","complete","progression","complete","complete","complete","complete","complete","complete","complete","normal","complete","complete","complete","complete","complete","complete","complete","complete","complete","complete","complete","complete","progression","progression","complete","normal","complete","normal","progression","complete","complete","complete","complete","complete","complete","complete","complete","progression","complete","progression","complete","complete","complete","complete","complete","complete","complete","complete","normal","progression","complete","complete","progression","complete","progression","complete","normal","normal","complete","complete","complete","complete","complete","complete","complete","complete","complete","complete","complete","complete","complete","normal","complete","complete","complete","complete","normal","complete","complete","complete","complete","progression","progression","progression","complete","normal","complete","complete","normal","complete","complete","complete","complete","complete","complete","complete","complete","complete","complete","complete","complete","complete","complete","normal","complete","complete","progression","complete","complete","progression","complete","complete","complete","complete","progression","complete","complete","complete","complete","complete","normal","complete","complete","complete","progression","complete","progression","complete","complete","complete","complete","complete","normal","complete","complete","complete","complete","complete","complete","normal","complete","complete","complete","complete","complete","complete","complete","progression","complete","complete","progression","complete","complete","complete","complete","complete","complete","progression","complete","complete","complete","complete","complete","normal","complete","complete","complete","complete","complete","complete","complete","normal","complete","complete","normal","complete","complete","normal","complete","complete","complete","complete","complete","complete","normal","complete","complete","complete","complete","complete","complete","complete","complete","complete","progression","progression","complete","complete","complete","normal","progression","progression","progression","complete","complete","complete","complete","complete","complete","normal","complete","complete","complete","complete","complete","complete","complete","complete","complete","complete","normal","complete","complete","complete","complete","complete","complete","complete","complete","complete","complete","complete","complete","complete","complete","complete","complete","complete","complete","complete","complete","complete","complete","progression","complete","complete","complete","complete","complete","complete","progression","complete","complete","complete","complete","complete","complete","complete","complete","complete","complete","complete","complete","complete","complete","complete","progression","complete","progression","complete","complete","complete","complete","complete","progression","complete","complete","complete","complete","complete","complete","complete","progression"))
+data_genes<-read.csv("pluri_pro.csv", header = TRUE)
+data_norm<-read.csv("norm_counts.csv", header = TRUE)
+keep<-data_norm[data_norm$Gene %in% data_genes$Genes, ]
+write.csv(keep, file="heatmap.csv")
