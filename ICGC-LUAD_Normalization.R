@@ -2,7 +2,7 @@ library(edgeR)
 library(dplyr)
 library(tidyverse)
 
-calculate_deg = function(exp_data, clinical_data,out_dir,project){
+cpm_normalization = function(exp_data, clinical_data,out_dir,project){
   
   raw<-read.csv(exp_data, header=TRUE, sep = ",")
   
@@ -43,5 +43,6 @@ calculate_deg = function(exp_data, clinical_data,out_dir,project){
   
   ## Save the normalized counts
   write.csv(tmm,file=paste0(out_dir,project,"_normalized_matrix.csv"))
-      
+  
 }
+
