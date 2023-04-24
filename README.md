@@ -16,4 +16,4 @@ The project aims to normalize gene expression data and perform differential expr
        
         out_dir="F:/Bose/ICGA-LUAD/Output/"  # Output directory
     
-        calculate_deg(exp_data,clinical_data,out_dir = out_dir,project = project) # perform analysis
+        cpm_normalization(exp_data,clinical_data,out_dir = out_dir,project = project) # perform analysis
