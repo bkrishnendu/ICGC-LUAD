@@ -43,18 +43,5 @@ calculate_deg = function(exp_data, clinical_data,out_dir,project){
   
   ## Save the normalized counts
   write.csv(tmm,file=paste0(out_dir,project,"_normalized_matrix.csv"))
-  
-  ##Estimate Dispersion
-  dge <- estimateDisp(y = dge)
-  return(dge)
-  
+      
 }
-
-
-
-
-
-
-
-
-
