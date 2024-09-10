@@ -19,8 +19,6 @@ if(length(which(duplicated(raw$gene_id)))>=1){
 } else{
   print("No duplicated rows found")
 }
-
-
 raw_mat<-raw %>% remove_rownames %>% column_to_rownames(var="gene_id")
 
 
@@ -58,8 +56,6 @@ dge$samples
 dge <- estimateDisp(y = dge)
 plotBCV(dge)
 
-
-
 ## Design the model matrix
 design <- model.matrix(~ dge$samples$group)
 design
@@ -74,9 +70,3 @@ deg= as.data.frame(topTags(lrt, n="Inf"))
 deg=deg[deg$FDR <0.05,]
 
 write.csv(deg, file= paste0(out_dir,"ICGC-LUAD_DEGs.csv"))
-
-
-
-
-
-
